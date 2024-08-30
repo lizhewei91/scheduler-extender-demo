@@ -1,0 +1,36 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: scheduler-extender-demo
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: scheduler-extender-demo
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: scheduler-extender-demo
+    spec:
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+          key: node-role.kubernetes.io/control-plane
+      nodeSelector:
+        node-role.kubernetes.io/control-plane: ""
+      serviceAccount: scheduler-extender-demo
+      containers:
+        - command:
+            - /usr/bin/scheduler-extender-demo
+            - --v=0
+            - --port=9999
+          name: scheduler-extender-demo
+          image: scheduler-extender-demo:v0.0.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 9999

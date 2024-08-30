@@ -1,0 +1,38 @@
+# rbac.yaml
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: scheduler-extender-demo
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - nodes
+    verbs:
+      - update
+      - patch
+      - get
+      - list
+      - watch
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: scheduler-extender-demo
+  namespace: kube-system
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: scheduler-extender-demo
+  namespace: kube-system
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: scheduler-extender-demo
+subjects:
+  - kind: ServiceAccount
+    name: scheduler-extender-demo
+    namespace: kube-system

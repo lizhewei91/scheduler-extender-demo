@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  annotations:
+    "nodeNames": "192.168.0.253,192.168.0.232"
+spec:
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+      key: node-role.kubernetes.io/control-plane
+  containers:
+    - name: nginx
+      image: docker.io/library/nginx:1.26.0
+      ports:
+        - containerPort: 80

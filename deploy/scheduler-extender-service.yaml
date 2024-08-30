@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: scheduler-extender-demo
+  namespace: kube-system
+  labels:
+    app: scheduler-extender-demo
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8888
+      name: http
+      targetPort: 9999
+  selector:
+    app: scheduler-extender-demo
