@@ -9,7 +9,7 @@ const (
 	Version       = "v0.0.1"
 	VersionPath   = "/version"
 
-	APIPrefix = "custom-scheduler"
+	APIPrefix = "/custom-scheduler"
 
 	FilterName = "customFilter"
 	FilterPath = APIPrefix + "/filter"
